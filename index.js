@@ -45,6 +45,10 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 })
 
+app.get("/ping", (req, res) => {
+  res.send("pong");
+})
+
 app.post("/order-event", (req, res) => {
   res.json({ status: "Event emitted successfully" });
   // const event = req.body.event;
