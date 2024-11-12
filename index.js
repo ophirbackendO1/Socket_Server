@@ -26,15 +26,15 @@ io.on("connection", (socket) => {
     io.emit("order-event", data);
   });
 
-  socket.on("table-event",(data)=>{
+  socket.on("table-event", (data) => {
     console.log("Table status changed!");
-    io.emit("table-event",data);
-  })
+    io.emit("table-event", data);
+  });
 
-  socket.on("migrate-table-event",(data)=>{
+  socket.on("migrate-table-event", (data) => {
     console.log("Table status changed!");
-    io.emit("migrate-table-event",data);
-  })
+    io.emit("migrate-table-event", data);
+  });
 
   socket.on("disconnect", () => {
     console.log("An user is disconnected");
@@ -43,11 +43,11 @@ io.on("connection", (socket) => {
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
-})
+});
 
 app.get("/ping", (req, res) => {
   res.send("pong");
-})
+});
 
 app.post("/order-event", (req, res) => {
   res.json({ status: "Event emitted successfully" });
@@ -68,7 +68,7 @@ app.post("/table-event", (req, res) => {
 
   io.emit("table-event", data);
 
-  console.log("A "+data.old_status+" table is "+data.status+" now!");
+  console.log("A " + data.old_status + " table is " + data.status + " now!");
 
   res.json({ status: "Event emitted successfully", event: event, data });
 });
@@ -79,15 +79,19 @@ app.post("/migrate-table-event", (req, res) => {
 
   io.emit("migrate-table-event", data);
 
-  console.log("Orders from table_id "+data.old_table_id+" migrated to table_id "+data.new_table_id);
-  
+  console.log(
+    "Orders from table_id " +
+      data.old_table_id +
+      " migrated to table_id " +
+      data.new_table_id
+  );
 
   res.json({ status: "Event emitted successfully", event: event, data });
 });
 
 app.listen(4000, () => {
-    console.log('Api server running at port 4000');
-  });
+  console.log("Api server running at port 4000");
+});
 
 // app.listen(4000, () => {
 //   console.log("Api server running at 127.0.0.1:4000");
@@ -97,6 +101,6 @@ app.listen(4000, () => {
 //   console.log("Socket server running at " + host + ":3000");
 // });
 
-// server.listen(3000, () => {
-//   console.log("Socket server running at 127.0.0.1:3000");
-// });
+server.listen(3000, () => {
+  console.log("Socket server running at port 3000");
+});
