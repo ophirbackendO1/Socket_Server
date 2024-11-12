@@ -41,6 +41,10 @@ io.on("connection", (socket) => {
   });
 });
 
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+})
+
 app.post("/order-event", (req, res) => {
   res.json({ status: "Event emitted successfully" });
   // const event = req.body.event;
