@@ -17,7 +17,7 @@ const io = socketIo(server, {
 });
 
 host = null;
-host = process.env.ONLINE_HOST;
+// host = process.env.ONLINE_HOST;
 port = process.env.PORT;
 
 io.on("connection", (socket) => {
