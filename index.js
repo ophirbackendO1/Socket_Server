@@ -55,16 +55,15 @@ app.get("/ping", (req, res) => {
 });
 
 app.post("/order-event", (req, res) => {
-  res.json({ status: "Event emitted successfully" });
-  // const event = req.body.event;
-  // const data = req.body.data;1
+  const event = req.body.event;
+  const data = req.body.data;1
 
-  // io.emit(event, data);
-  // io.emit("table-event", data);
+  io.emit(event, data);
+  io.emit("table-event", data);
 
-  // console.log("An user placed an order now!");
+  console.log("An user placed an order now!");
 
-  // res.json({ status: "Event emitted successfully", event: event, data });
+  res.json({ status: "Event emitted successfully", event: event, data });
 });
 
 app.post("/table-event", (req, res) => {
@@ -99,7 +98,7 @@ app.post("/migrate-table-event", (req, res) => {
 // });
 
 server.listen(port, () => {
-  console.log("Socket server running at port : "+port);
+  console.log("Socket server running at port : " + port);
 });
 
 // app.listen(4000, () => {
