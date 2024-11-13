@@ -89,8 +89,12 @@ app.post("/migrate-table-event", (req, res) => {
   res.json({ status: "Event emitted successfully", event: event, data });
 });
 
-app.listen(4000, () => {
-  console.log("Api server running at port 4000");
+// app.listen(4000, () => {
+//   console.log("Api server running at port 4000");
+// });
+
+server.listen(3000, () => {
+  console.log("Socket server running at port 3000");
 });
 
 // app.listen(4000, () => {
@@ -100,7 +104,3 @@ app.listen(4000, () => {
 // server.listen(3000, host, () => {
 //   console.log("Socket server running at " + host + ":3000");
 // });
-
-server.listen(3000, () => {
-  console.log("Socket server running at port 3000");
-});
