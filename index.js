@@ -109,47 +109,26 @@
 // //   console.log("Socket server running at " + host + ":3000");
 // // });
 
-const http = require("http");
-const express = require("express");
-const socketIo = require("socket.io");
-
+const express = require('express');
 const app = express();
+const http = require('http');
 const server = http.createServer(app);
-const io = socketIo(server, {
-  cors: {
-    origin: "*", // Adjust this to restrict to certain origins if needed
-  },
-});
-
+const { Server } = require("socket.io");
+const io = new Server(server);
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(express.json()); // To parse JSON bodies in requests
-
-// Set up Socket.IO
-io.on("connection", (socket) => {
-  console.log("User connected:", socket.id);
-
-  socket.on("order-event", (data) => {
-    console.log("Order event received");
-    io.emit("order-event", data);
-  });
-
-  socket.on("disconnect", () => {
-    console.log("User disconnected:", socket.id);
-  });
+app.get('/', (req, res) => {
+    res.write(`<h1>Socket IO Start on Port : ${PORT}</h1>`);
+    res.end();
 });
 
-// Routes for Express
-app.get("/", (req, res) => {
-  res.send("Socket Server running at port : "+PORT);
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    socket.on('message', (ms) => {
+        io.emit('message', ms);
+    });
 });
 
-app.get("/ping", (req, res) => {
-  res.send("pong");
-});
-
-// Start the server
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log('listening on *:3000');
 });
