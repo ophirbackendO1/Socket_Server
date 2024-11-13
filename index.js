@@ -3,8 +3,9 @@ const socketIo = require("socket.io");
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const app = express();
+require("dotenv").config();
 
+const app = express();
 app.use(bodyParser.json());
 
 const server = http.createServer(app);
@@ -14,8 +15,9 @@ const io = socketIo(server, {
   },
 });
 
-host = "192.168.100.13";
-port = process.env.PORT || 3000;
+host = null;
+// host = process.env.ONLINE_HOST;
+port = process.env.PORT;
 
 io.on("connection", (socket) => {
   console.log(
@@ -50,13 +52,10 @@ app.get("/", (req, res) => {
   res.send("Socket server running at port : " + port);
 });
 
-app.get("/ping", (req, res) => {
-  res.send("pong");
-});
-
 app.post("/order-event", (req, res) => {
   const event = req.body.event;
-  const data = req.body.data;1
+  const data = req.body.data;
+  1;
 
   io.emit(event, data);
   io.emit("table-event", data);
@@ -93,18 +92,13 @@ app.post("/migrate-table-event", (req, res) => {
   res.json({ status: "Event emitted successfully", event: event, data });
 });
 
-// app.listen(4000, () => {
-//   console.log("Api server running at port 4000");
-// });
-
-server.listen(port, () => {
-  console.log("Socket server running at port : " + port);
-});
-
-// app.listen(4000, () => {
-//   console.log("Api server running at 127.0.0.1:4000");
-// });
-
-// server.listen(3000, host, () => {
-//   console.log("Socket server running at " + host + ":3000");
-// });
+//run server
+if (host != null) {
+  server.listen(port, host, () => {
+    console.log("Socket server running at : http://" + host + ":" + port);
+  });
+} else {
+  server.listen(port, () => {
+    console.log("Socket server running at : http://your-domain");
+  });
+}
