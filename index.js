@@ -142,7 +142,7 @@ io.on("connection", (socket) => {
 
 // Routes for Express
 app.get("/", (req, res) => {
-  res.send("Socket Server running at port ${PORT}");
+  res.send("Socket Server running at port : "+PORT);
 });
 
 app.get("/ping", (req, res) => {
