@@ -121,6 +121,8 @@ const io = socketIo(server, {
   },
 });
 
+const PORT = process.env.PORT || 3000;
+
 // Middleware
 app.use(express.json()); // To parse JSON bodies in requests
 
@@ -140,7 +142,7 @@ io.on("connection", (socket) => {
 
 // Routes for Express
 app.get("/", (req, res) => {
-  res.send("Hello World from Express and Socket.IO!");
+  res.send("Socket Server running at port ${PORT}");
 });
 
 app.get("/ping", (req, res) => {
@@ -148,7 +150,6 @@ app.get("/ping", (req, res) => {
 });
 
 // Start the server
-const PORT = 3000;
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
