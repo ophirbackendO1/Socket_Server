@@ -21,6 +21,10 @@ io.on("connection", (socket) => {
     "An user is connecting to the server with socket_id : " + socket.id
   );
 
+  socket.on("message", (data) => {
+    io.emit("message", data);
+  });
+
   socket.on("order-event", (data) => {
     console.log("An user placed an order now!");
     io.emit("order-event", data);
