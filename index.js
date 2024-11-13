@@ -1,6 +1,7 @@
 const http = require("http");
 const socketIo = require("socket.io");
 const express = require("express");
+const path = require('path');
 const bodyParser = require("body-parser");
 
 require("dotenv").config();
@@ -16,7 +17,7 @@ const io = socketIo(server, {
 });
 
 host = null;
-// host = process.env.ONLINE_HOST;
+host = process.env.ONLINE_HOST;
 port = process.env.PORT;
 
 io.on("connection", (socket) => {
@@ -49,7 +50,7 @@ io.on("connection", (socket) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Socket server running at port : " + port);
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.post("/order-event", (req, res) => {
